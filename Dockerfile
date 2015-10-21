@@ -14,6 +14,9 @@ RUN yum install -y \
     tree \
     openssh-server \
     openssh-clients \
+    gcc \
+    zlib-devel \
+    openssl-devel \
     mongodb-org
 
 COPY conf/mongod.conf /etc/
@@ -28,6 +31,23 @@ RUN sed -ri 's/^#PermitEmptyPasswords no/PermitEmptyPasswords yes/' /etc/ssh/ssh
 # JST
 RUN cp /usr/share/zoneinfo/Japan /etc/localtime \
  && echo "ZONE=\"Asia/Tokyo\"" > /etc/sysconfig/clock
+
+# system python
+RUN curl -s https://www.python.org/ftp/python/2.7.10/Python-2.7.10.tgz | tar -xz -C . \
+ && cd Python-2.7.10/ \
+ && ./configure --with-threads --enable-shared --prefix=/usr/local \
+ && make \
+ && make altinstall
+
+RUN ln -s /usr/local/lib/libpython2.7.so.1.0 /lib64/ \
+ && echo "/usr/local/lib" >> /etc/ld.so.conf \
+ && ldconfig \
+ && ln -s /usr/local/bin/python2.7 /usr/local/bin/python \
+ && ln -s /usr/local/bin/python2.7 /usr/local/bin/python2
+
+RUN curl -kL https://bootstrap.pypa.io/get-pip.py | python
+
+RUN pip install pymongo
 
 ADD bootstrap.sh /etc/bootstrap.sh
 RUN chown root:root /etc/bootstrap.sh && chmod 700 /etc/bootstrap.sh
