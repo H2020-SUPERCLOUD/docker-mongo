@@ -12,7 +12,18 @@ RUN yum install -y \
     vim \
     tar \
     tree \
+    openssh-server \
+    openssh-clients \
     mongodb-org
+
+COPY conf/mongod.conf /etc/
+COPY conf/replset.js /tmp/
+
+# allow empty password root ssh
+RUN sed -ri 's/^#PermitEmptyPasswords no/PermitEmptyPasswords yes/' /etc/ssh/sshd_config \
+ && sed -ri 's/^#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config \
+ && sed -ri 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config \
+ && passwd -d root
 
 # JST
 RUN cp /usr/share/zoneinfo/Japan /etc/localtime \

@@ -18,3 +18,10 @@ mon3:
   hostname: mon3.containers.dev
   user: root
   mem_limit: 1024m
+
+mon4:
+  image: hiropppe/mongo:3.0.7
+  dns: 172.17.42.1
+  hostname: mon4.containers.dev
+  user: root
+  mem_limit: 1024m
