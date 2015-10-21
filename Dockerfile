@@ -15,8 +15,11 @@ RUN yum install -y \
     openssh-server \
     openssh-clients \
     gcc \
+    gcc-c++ \
     zlib-devel \
     openssl-devel \
+    readline-devel \
+    sqlite-devel \
     mongodb-org
 
 COPY conf/mongod.conf /etc/
@@ -47,7 +50,9 @@ RUN ln -s /usr/local/lib/libpython2.7.so.1.0 /lib64/ \
 
 RUN curl -kL https://bootstrap.pypa.io/get-pip.py | python
 
-RUN pip install pymongo
+RUN pip install pymongo==3.0.3 \
+ && pip install jsonschema==2.5.1 \
+ && pip install ipython==3.2.0
 
 ADD bootstrap.sh /etc/bootstrap.sh
 RUN chown root:root /etc/bootstrap.sh && chmod 700 /etc/bootstrap.sh
