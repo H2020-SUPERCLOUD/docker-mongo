@@ -11,4 +11,3 @@ BASEDIR="$(cd "${BIN}/.."; pwd)"
 
 exec_on_container "mon1" "mongo test < /tmp/replset.js"
 exec_on_container "mon2" "echo 'rs.slaveOk()' | mongo test"
-exec_on_container "mon3" "echo 'rs.slaveOk()' | mongo test"

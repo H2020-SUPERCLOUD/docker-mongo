@@ -61,3 +61,9 @@ RUN echo '# JDK' >> ~/.bash_profile \
 RUN git clone https://github.com/brianfrankcooper/YCSB.git \
  && cd YCSB \
  && mvn -pl com.yahoo.ycsb:mongodb-binding -am clean package
+
+ADD bootstrap.sh /etc/bootstrap.sh
+RUN chown root:root /etc/bootstrap.sh && chmod 700 /etc/bootstrap.sh
+ENV BOOTSTRAP /etc/bootstrap.sh
+
+CMD ["/etc/bootstrap.sh", "-d"]
