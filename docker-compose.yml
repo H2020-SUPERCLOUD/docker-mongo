@@ -2,6 +2,8 @@ mon1:
   image: hiropppe/mongo:3.0
   dns: 172.17.42.1
   hostname: mon1.containers.dev
+  ports:
+    - "27017:27017"
   user: root
   mem_limit: 1024m
   
