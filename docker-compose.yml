@@ -1,29 +1,28 @@
-mon1:
-  image: hiropppe/mongo:3.0
-  dns: 172.17.42.1
-  hostname: mon1.containers.dev
-  ports:
-    - "27017:27017"
-  user: root
-  mem_limit: 1024m
+version: '2'
+
+services:
+  mon1:
+    build: .
+    image: hiropppe/mongo:3.0
+    ports:
+      - "27017:27017"
+    user: root
+    mem_limit: 1024m
   
-mon2:
-  image: hiropppe/mongo:3.0
-  dns: 172.17.42.1
-  hostname: mon2.containers.dev
-  ports:
-    - "27117:27017"
-  user: root
-  mem_limit: 1024m
+  mon2:
+    build: .
+    image: hiropppe/mongo:3.0
+    ports:
+      - "27117:27017"
+    user: root
+    mem_limit: 1024m
 
-mon3:
-  image: hiropppe/mongo:3.0
-  dns: 172.17.42.1
-  hostname: mon3.containers.dev
-  user: root
+  mon3:
+    build: .
+    image: hiropppe/mongo:3.0
+    user: root
 
-ycsb:
-  image: hiropppe/mongo-ycsb:0.3.1
-  dns: 172.17.42.1
-  hostname: ycsb.containers.dev
-  user: root
+  ycsb:
+    build: ./ycsb
+    image: hiropppe/mongo-ycsb:0.3.1
+    user: root

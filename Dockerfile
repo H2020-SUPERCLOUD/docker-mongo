@@ -12,8 +12,6 @@ RUN yum install -y \
     vim \
     tar \
     tree \
-    openssh-server \
-    openssh-clients \
     gcc \
     gcc-c++ \
     zlib-devel \
@@ -24,12 +22,6 @@ RUN yum install -y \
 
 COPY conf/mongod.conf /etc/
 COPY conf/replset.js /tmp/
-
-# allow empty password root ssh
-RUN sed -ri 's/^#PermitEmptyPasswords no/PermitEmptyPasswords yes/' /etc/ssh/sshd_config \
- && sed -ri 's/^#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config \
- && sed -ri 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config \
- && passwd -d root
 
 # JST
 RUN cp /usr/share/zoneinfo/Japan /etc/localtime \
@@ -50,11 +42,14 @@ RUN ln -s /usr/local/lib/libpython2.7.so.1.0 /lib64/ \
 
 RUN curl -kL https://bootstrap.pypa.io/get-pip.py | python
 
-RUN pip install pymongo==3.0.3 \
- && pip install jsonschema==2.5.1 \
- && pip install ipython==3.2.0
+RUN pip install pymongo \
+ && pip install jsonschema \
+ && pip install ipython
 
-ADD bootstrap.sh /etc/bootstrap.sh
+COPY init_replset.sh /tmp/init_replset.sh
+RUN chown root:root /tmp/init_replset.sh && chmod 700 /tmp/init_replset.sh
+
+COPY bootstrap.sh /etc/bootstrap.sh
 RUN chown root:root /etc/bootstrap.sh && chmod 700 /etc/bootstrap.sh
 ENV BOOTSTRAP /etc/bootstrap.sh
 

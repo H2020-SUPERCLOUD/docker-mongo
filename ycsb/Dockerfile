@@ -32,9 +32,9 @@ RUN ln -s /usr/local/lib/libpython2.7.so.1.0 /lib64/ \
 
 RUN curl -kL https://bootstrap.pypa.io/get-pip.py | python
 
-RUN pip install pymongo==3.0.3 \
- && pip install jsonschema==2.5.1 \
- && pip install ipython==3.2.0
+RUN pip install pymongo \
+ && pip install jsonschema \
+ && pip install ipython
 
 # java
 RUN curl -LO 'http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-linux-x64.rpm' -H 'Cookie: oraclelicense=accept-securebackup-cookie' \
@@ -62,7 +62,7 @@ RUN git clone https://github.com/brianfrankcooper/YCSB.git \
  && cd YCSB \
  && mvn -pl com.yahoo.ycsb:mongodb-binding -am clean package
 
-ADD bootstrap.sh /etc/bootstrap.sh
+COPY bootstrap.sh /etc/bootstrap.sh
 RUN chown root:root /etc/bootstrap.sh && chmod 700 /etc/bootstrap.sh
 ENV BOOTSTRAP /etc/bootstrap.sh
 
