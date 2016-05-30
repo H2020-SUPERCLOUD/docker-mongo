@@ -1,6 +1,5 @@
 #!/bin/bash
 
-service sshd start
 service mongod start
  
 if [[ $1 == "-d" ]]; then
