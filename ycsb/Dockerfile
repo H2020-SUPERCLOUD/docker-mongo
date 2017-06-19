@@ -37,8 +37,8 @@ RUN pip install pymongo \
  && pip install ipython
 
 # java
-RUN curl -LO 'http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-linux-x64.rpm' -H 'Cookie: oraclelicense=accept-securebackup-cookie' \
- && rpm -i jdk-7u79-linux-x64.rpm \
+RUN curl -LO 'http://download.oracle.com/otn-pub/java/jdk/7u80-b15/jdk-7u79-linux-x64.rpm' -H 'Cookie: oraclelicense=accept-securebackup-cookie' \
+ && rpm -i jdk-7u80-linux-x64.rpm \
  && rm jdk-7u79-linux-x64.rpm
 
 # mvn
