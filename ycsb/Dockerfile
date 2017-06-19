@@ -37,12 +37,12 @@ RUN pip install pymongo \
  && pip install ipython
 
 # java
-RUN curl -LO 'http://download.oracle.com/otn-pub/java/jdk/7u80-b15/jdk-7u79-linux-x64.rpm' -H 'Cookie: oraclelicense=accept-securebackup-cookie' \
+RUN curl -LO 'https://mirror.its.sfu.ca/mirror/CentOS-Third-Party/NSG/common/x86_64/jdk-7u80-linux-x64.rpm' -H 'Cookie: oraclelicense=accept-securebackup-cookie' \
  && rpm -i jdk-7u80-linux-x64.rpm \
- && rm jdk-7u79-linux-x64.rpm
+ && rm jdk-7u80-linux-x64.rpm
 
 # mvn
-RUN curl -s http://ftp.yz.yamagata-u.ac.jp/pub/network/apache/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz | tar -xz -C /usr/local/ \
+RUN curl -s http://ftp.yz.yamagata-u.ac.jp/pub/network/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz | tar -xz -C /usr/local/ \
  && cd /usr/local \
  && ln -s ./apache-maven-* maven
 
@@ -65,5 +65,5 @@ RUN git clone https://github.com/brianfrankcooper/YCSB.git \
 COPY bootstrap.sh /etc/bootstrap.sh
 RUN chown root:root /etc/bootstrap.sh && chmod 700 /etc/bootstrap.sh
 ENV BOOTSTRAP /etc/bootstrap.sh
-
 CMD ["/etc/bootstrap.sh", "-d"]
+ADD ./mongo.sh /YCSB/mongo.sh
